@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Surpresa pra minha noiva</title>
+  <title>Surpresa pra celular</title>
   <style>
     body {
       margin: 0; background: #000;
@@ -42,7 +42,6 @@
 <body>
 
   <img id="imagem" src="img1.jpg" alt="Imagem inicial" />
-
   <div id="seta" role="button" aria-label="Clique para trocar imagem e tocar música">⬇️</div>
 
   <audio id="musica" src="musica.mp3" preload="auto" loop></audio>
@@ -54,14 +53,23 @@
 
     let jaTocou = false;
 
+    // Função para detectar se é dispositivo móvel (celular/tablet)
+    function isMobile() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
     function iniciar() {
-      if (jaTocou) return;  // só toca 1 vez e troca a imagem
+      if (!isMobile()) {
+        alert("Este efeito só funciona em dispositivos móveis.");
+        return;
+      }
+
+      if (jaTocou) return;
 
       img.src = "img2.jpg";
 
       audio.play()
         .then(() => {
-          // Música iniciou normalmente
           console.log("Música tocando!");
         })
         .catch(err => {
@@ -71,7 +79,6 @@
       jaTocou = true;
     }
 
-    // Eventos para desktop e mobile
     seta.addEventListener("click", iniciar);
     seta.addEventListener("touchstart", iniciar);
   </script>
