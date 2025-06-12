@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surpresa 😈</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      font-family: sans-serif;
+    }
+
+    #imagem {
+      width: 90%;
+      max-width: 400px;
+      border-radius: 14px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+
+    #seta {
+      margin-top: 20px;
+      font-size: 50px;
+      cursor: pointer;
+      animation: bounce 1s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+
+  <img id="imagem" src="img1.jpg" alt="Imagem 1" />
+
+  <div id="seta">⬇️</div>
+
+  <audio id="musica" src="musica.mp3" preload="auto" loop></audio>
+
+  <script>
+    const img = document.getElementById("imagem");
+    const seta = document.getElementById("seta");
+    const audio = document.getElementById("musica");
+
+    let trocado = false;
+
+    function iniciar() {
+      if (trocado) return;
+      img.src = "img2.jpg";     // Troca a imagem
+      audio.play();             // Toca a música
+      trocado = true;
+    }
+
+    // Suporte para toque e clique
+    seta.addEventListener("click", iniciar);
+    seta.addEventListener("touchstart", iniciar);
+  </script>
+
+</body>
+</html>
