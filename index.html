@@ -2,19 +2,18 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Surpresa 😈</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Surpresa pra minha noiva</title>
   <style>
     body {
-      margin: 0;
-      background-color: #000;
+      margin: 0; background: #000;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       color: white;
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
     }
 
     #imagem {
@@ -22,26 +21,29 @@
       max-width: 400px;
       border-radius: 14px;
       box-shadow: 0 0 20px rgba(255,255,255,0.2);
+      user-select: none;
     }
 
     #seta {
       margin-top: 20px;
       font-size: 50px;
       cursor: pointer;
-      animation: bounce 1s infinite;
+      user-select: none;
+      animation: bounce 1.2s infinite;
+      color: #fff;
     }
 
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-12px); }
     }
   </style>
 </head>
 <body>
 
-  <img id="imagem" src="img1.jpg" alt="Imagem 1" />
+  <img id="imagem" src="img1.jpg" alt="Imagem inicial" />
 
-  <div id="seta">⬇️</div>
+  <div id="seta" role="button" aria-label="Clique para trocar imagem e tocar música">⬇️</div>
 
   <audio id="musica" src="musica.mp3" preload="auto" loop></audio>
 
@@ -50,16 +52,26 @@
     const seta = document.getElementById("seta");
     const audio = document.getElementById("musica");
 
-    let trocado = false;
+    let jaTocou = false;
 
     function iniciar() {
-      if (trocado) return;
-      img.src = "img2.jpg";     // Troca a imagem
-      audio.play();             // Toca a música
-      trocado = true;
+      if (jaTocou) return;  // só toca 1 vez e troca a imagem
+
+      img.src = "img2.jpg";
+
+      audio.play()
+        .then(() => {
+          // Música iniciou normalmente
+          console.log("Música tocando!");
+        })
+        .catch(err => {
+          console.warn("Falha ao iniciar a música:", err);
+        });
+
+      jaTocou = true;
     }
 
-    // Suporte para toque e clique
+    // Eventos para desktop e mobile
     seta.addEventListener("click", iniciar);
     seta.addEventListener("touchstart", iniciar);
   </script>
